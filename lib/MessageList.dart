@@ -7,7 +7,7 @@ import 'Message.dart';
 class MessageList extends StatefulWidget {
   final String title;
 
-  const MessageList({Key key, this.title}) : super(key: key);
+  const MessageList({Key? key, required this.title}) : super(key: key);
 
   @override
   _MessageListState createState() => _MessageListState();
@@ -18,9 +18,8 @@ class _MessageListState extends State<MessageList> {
 
   Future loadMessageList() async {
     String content = await rootBundle.loadString('data/messages.json');
-    List collection = json.decode(content);
-    print(collection);
-    List<Message> _messages = collection.map((json) => Message.fromJson(json)).toList();
+    List collection = json.decode(content); // Take json string data and turn into a collection of Map data set
+    List<Message> _messages = collection.map((json) => Message.fromJson(json)).toList(); // Transform from collection of Map data set to a list of Message Objects
 
     setState(() {
       messages = _messages;
@@ -47,8 +46,8 @@ class _MessageListState extends State<MessageList> {
             leading: CircleAvatar(
               child: Text('PJ'),
             ),
-            title: Text(message.subject ?? ''),
-            subtitle: Text(message.body ?? '', maxLines: 2, overflow: TextOverflow.ellipsis,),
+            title: Text(message.subject),
+            subtitle: Text(message.body, maxLines: 2, overflow: TextOverflow.ellipsis,),
             isThreeLine: true,
           );
         }, separatorBuilder: (BuildContext context, int index) => Divider(),
