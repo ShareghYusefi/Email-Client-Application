@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_client_app/ComposeButton.dart';
+import 'package:flutter_email_client_app/MessageCompose.dart';
+import 'package:flutter_email_client_app/MessageDetail.dart';
 import 'Message.dart';
 
 
@@ -60,13 +63,17 @@ class _MessageListState extends State<MessageList> {
                     title: Text(message.subject),
                     subtitle: Text(message.body, maxLines: 2, overflow: TextOverflow.ellipsis,),
                     isThreeLine: true,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => MessageDetail(subject: message.subject, body: message.body,)) );
+                    },
                   );
                 }, separatorBuilder: (BuildContext context, int index) => Divider(),
               );
           }
         },
 
-      )
+      ),
+      floatingActionButton: ComposeButton()
     );
   }
 }
