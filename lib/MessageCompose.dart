@@ -1,42 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_client_app/Message.dart';
 
-class MessageCompose extends StatelessWidget {
+class MessageCompose extends StatefulWidget {
+  @override
+  _MessageComposeState createState() => _MessageComposeState();
+}
+
+class _MessageComposeState extends State<MessageCompose> {
+  String to = "";
+  String subject = "";
+  String body = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Compose Message'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text("Compose Message"),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: ElevatedButton(
-                    child: Text('Love'),
-                    onPressed: (){
-                      Navigator.pop(context, "love");
-                    },
-                  )
+              ListTile(
+                title: TextField(
+                  onChanged: (value){
+                    to = value;
+                  },
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.add),
+                      labelText: 'TO',
+                      labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                ),
               ),
-              Container(width: 20.0,),
-              Expanded(
-                  child: ElevatedButton(
-                    child: Text('Hate'),
-                    onPressed: (){
-                      Navigator.pop(context, "hate");
-                    },
-                  )
+              ListTile(
+                title: TextField(
+                  onChanged: (value){
+                    subject = value;
+                  },
+                  decoration: InputDecoration(
+                      labelText: 'SUBJECT',
+                      labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                ),
               ),
-              ],
+              Divider(),
+              ListTile(
+                title: TextField(
+                  onChanged: (value){
+                    body = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'BODY',
+                    labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                  maxLines: 8,
+                ),
+              ),
+              ListTile(
+                title: ElevatedButton(
+                  child: Text('SEND'),
+                  onPressed: () {
+                    Message message = Message(subject, body);
+                    Navigator.pop(context, message);
+                  },
+                ),
+              )
+            ],
           ),
-        ],
-        ),
       ),
     );
   }

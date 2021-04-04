@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/ComposeButton.dart';
-import 'package:flutter_email_client_app/MessageCompose.dart';
 import 'package:flutter_email_client_app/MessageDetail.dart';
 import 'Message.dart';
 
@@ -15,13 +14,20 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageListState extends State<MessageList> {
-  late Future<List<Message>> messages;
+  late Future<List<Message>> future;
+  late List<Message> messages = [];
 
   @override
   void initState() {
-    messages = Message.browse();
     super.initState();
+    fetch();
   }
+
+  void fetch() async {
+    future = Message.browse();
+    messages = await future;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +36,8 @@ class _MessageListState extends State<MessageList> {
         actions: [
           IconButton(
               icon: Icon(Icons.refresh),
-              onPressed: (){
-                var _messages = Message.browse();
+              onPressed: () async {
+                var _messages = await Message.browse();
 
                 setState(() {
                   messages = _messages;
@@ -40,7 +46,7 @@ class _MessageListState extends State<MessageList> {
         ],
       ),
       body: FutureBuilder(
-        future: messages, //Data source
+        future: future, //Data source
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch(snapshot.connectionState) {
             case ConnectionState.none:
@@ -73,7 +79,7 @@ class _MessageListState extends State<MessageList> {
         },
 
       ),
-      floatingActionButton: ComposeButton()
+      floatingActionButton: ComposeButton(messages)
     );
   }
 }
