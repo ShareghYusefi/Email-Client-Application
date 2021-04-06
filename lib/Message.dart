@@ -9,15 +9,21 @@ class Message {
   final String subject;
   final String body;
 
+
   Message(this.subject, this.body);
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
 
-  static Future<List<Message>> browse() async {
-    http.Response response =
-          await http.get(Uri.parse('https://run.mocky.io/v3/37398798-2df2-4838-9b19-d7d7d2fb0d28'));
+  static Future<List<Message>> browse({status = 'important'}) async {
 
-    await Future.delayed(Duration(seconds: 3));
+    String url = status == 'important'
+        ? 'https://run.mocky.io/v3/171a367e-af83-41e9-816f-7ffe2b955c99'
+        : 'https://run.mocky.io/v3/37398798-2df2-4838-9b19-d7d7d2fb0d28';
+
+    http.Response response =
+          await http.get(Uri.parse(url));
+
+    await Future.delayed(Duration(milliseconds: 500));
 
     String content = response.body;
     List collection = json.decode(content); // Take json string data and turn into a collection of Map data set

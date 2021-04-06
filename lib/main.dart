@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_email_client_app/MessageList.dart';
+import 'package:flutter_email_client_app/App.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
-        accentColor: Colors.blue,
+        accentColor: Colors.redAccent,
       ),
-      home: MessageList(title: 'This is the Homepage'),
+      home: App(),
     );
   }
 }
