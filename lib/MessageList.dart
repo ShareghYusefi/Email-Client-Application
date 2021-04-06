@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/ComposeButton.dart';
 import 'package:flutter_email_client_app/MessageDetail.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'Message.dart';
 
 
@@ -63,16 +64,56 @@ class _MessageListState extends State<MessageList> {
                 itemCount: messages.length,
                 itemBuilder: (BuildContext context, int index) {
                   Message message = messages[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      child: Text('PJ'),
+                  return Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.25,
+                    actions: <Widget>[
+                      IconSlideAction(
+                        caption: 'Archive',
+                        color: Colors.blue,
+                        icon: Icons.archive,
+                        onTap: () => {},
+                      ),
+                      IconSlideAction(
+                        caption: 'Share',
+                        color: Colors.indigo,
+                        icon: Icons.share,
+                        onTap: () => {},
+                      ),
+                    ],
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        caption: 'More',
+                        color: Colors.black45,
+                        icon: Icons.more_horiz,
+                        onTap: () => {},
+                      ),
+                      IconSlideAction(
+                        caption: 'Delete',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () => {
+                          setState(() {
+                            messages.removeAt(index);
+                          })
+                        },
+                      ),
+                    ],
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text('PJ'),
+                      ),
+                      title: Text(message.subject),
+                      subtitle: Text(message.body, maxLines: 2, overflow: TextOverflow.ellipsis,),
+                      isThreeLine: true,
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => MessageDetail(subject: message.subject, body: message.body,)
+                            )
+                        );
+                      },
                     ),
-                    title: Text(message.subject),
-                    subtitle: Text(message.body, maxLines: 2, overflow: TextOverflow.ellipsis,),
-                    isThreeLine: true,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => MessageDetail(subject: message.subject, body: message.body,)) );
-                    },
                   );
                 }, separatorBuilder: (BuildContext context, int index) => Divider(),
               );
