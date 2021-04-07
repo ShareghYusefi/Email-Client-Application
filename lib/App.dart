@@ -1,37 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/AppDrawer.dart';
+import 'package:flutter_email_client_app/CalendarScreen.dart';
+import 'package:flutter_email_client_app/ContactsScreen.dart';
+import 'package:flutter_email_client_app/InboxScreen.dart';
 
 import 'MessageList.dart';
 
-class App extends StatelessWidget {
+
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      child: Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                  icon: Icon(Icons.refresh),
-                  onPressed: () async { })
-            ],
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  text: "Important",
-                ),
-                Tab(text: "Other",)
-              ],
-            ),
+    return Scaffold(
+      body: [
+        InboxScreen(),
+        ContactsScreen(),
+        CalendarScreen()
+      ].elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.mail),
+            label: 'Inbox'
           ),
-          drawer: AppDrawer(),
-          body: TabBarView(
-            children: [
-              MessageList(status:'important'),
-              MessageList(status: 'other'),
-            ],
+          BottomNavigationBarItem(
+              icon: Icon(Icons.people),
+              label: 'Contacts'
           ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              label: 'Calendar'
+          ),
+        ],
+        onTap: (value) => _onBarItemTap(value),
+        currentIndex: _selectedIndex,
       ),
-      length: 2,
     );
   }
+
+  void _onBarItemTap(int value) {
+    setState(() {
+      _selectedIndex = value;
+    });
+  }
 }
+
