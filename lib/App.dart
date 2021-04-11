@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_email_client_app/AppDrawer.dart';
 import 'package:flutter_email_client_app/CalendarScreen.dart';
 import 'package:flutter_email_client_app/ContactsScreen.dart';
 import 'package:flutter_email_client_app/InboxScreen.dart';
-
-import 'MessageList.dart';
-
 
 class App extends StatefulWidget {
   @override
