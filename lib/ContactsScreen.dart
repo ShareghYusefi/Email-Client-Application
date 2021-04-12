@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/AppDrawer.dart';
 import 'package:flutter_email_client_app/ContactManager.dart';
+import 'package:flutter_email_client_app/ContactSearchDelegate.dart';
 import 'package:flutter_email_client_app/model/Contact.dart';
+
+import 'ContactListBuilder.dart';
 
 class ContactsScreen extends StatelessWidget {
   ContactManager manager = ContactManager();
@@ -26,44 +29,38 @@ class ContactsScreen extends StatelessWidget {
             ),
             backgroundColor: Colors.red,
           ),
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: (){
+                showSearch(
+                    context: context,
+                    delegate: ContactSearchDelegate(manager: manager)
+                );
+              },
+          ),
           Padding(
             padding: EdgeInsets.only(right: 16.0),
-          )
+          ),
         ],
       ),
       drawer: AppDrawer(),
-      body: StreamBuilder<List<Contact>>(
-        stream: manager.contactListView,
-        // Snapshot is the data being yielded by stream
-        builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
-
-          switch(snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-              return Center(child: CircularProgressIndicator());
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Text("There was an error ${snapshot.error}");
-              }
-
-              List<Contact> contacts = snapshot.data!;
-
-              return ListView.separated(
-                itemCount: contacts.length,
-                separatorBuilder: (BuildContext context, int index) => Divider(),
-                itemBuilder: (BuildContext context, int index) {
-                  Contact _contact = contacts[index];
-                  return ListTile(
-                    title: Text(_contact.name),
-                    subtitle: Text(_contact.email),
-                    leading: CircleAvatar(),
-                  );
-                },
-              );
+      body: ContactListBuilder(
+          stream: manager.contactListView,
+          builder: (context, contacts) {
+            return ListView.separated(
+              itemCount: contacts.length,
+              separatorBuilder: (BuildContext context, int index) => Divider(),
+              itemBuilder: (BuildContext context, int index) {
+                Contact _contact = contacts[index];
+                return ListTile(
+                  title: Text(_contact.name),
+                  subtitle: Text(_contact.email),
+                  leading: CircleAvatar(),
+                );
+              },
+            );
           }
-        },
-        ),
+      )
       );
   }
 }
