@@ -2,14 +2,14 @@
 import 'dart:async';
 import 'package:flutter_email_client_app/model/Contact.dart';
 import 'package:flutter_email_client_app/service/ContactService.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ContactManager {
   // This stream can subscribe and listen to contactListView stream
-  // ignore: close_sinks
-  final StreamController<int> _contactCount = StreamController<int>();
+  final BehaviorSubject<int> _contactCount = BehaviorSubject<int>();
   Stream<int> get contactCount => _contactCount.stream; // returning the data passed through the stream
 
-  // By marking a function as async* we are able to use the yield keyword and create/return a Stream of data
+  // return a stream from a method that returns a Future
   Stream<List<Contact>> get contactListView =>
       Stream.fromFuture(ContactService.browse());
 
