@@ -12,7 +12,7 @@ class EmailApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Wrap Application with Provider with data
-    return Provider(
+    return Provider<ContactManager>(
       data: ContactManager(),
       child: MaterialApp(
         title: 'Flutter Demo',
