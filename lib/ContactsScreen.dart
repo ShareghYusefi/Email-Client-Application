@@ -3,6 +3,7 @@ import 'package:flutter_email_client_app/AppDrawer.dart';
 import 'package:flutter_email_client_app/ContactManager.dart';
 import 'package:flutter_email_client_app/ContactSearchDelegate.dart';
 import 'package:flutter_email_client_app/model/Contact.dart';
+import 'package:flutter_email_client_app/overseer.dart';
 
 import 'ContactCounter.dart';
 import 'ContactListBuilder.dart';
@@ -12,7 +13,7 @@ class ContactsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Access data available through provider class
-    // ContactManager manager = Provider.of(context);
+    ContactManager manager = Provider.of(context).fetch(ContactManager);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,6 +36,7 @@ class ContactsScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: ContactListBuilder(
+          stream: manager.contactListView,
           builder: (context, contacts) {
             return ListView.separated(
               itemCount: contacts.length,

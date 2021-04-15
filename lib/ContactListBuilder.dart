@@ -3,19 +3,21 @@ import 'package:flutter_email_client_app/model/Contact.dart';
 
 import 'ContactManager.dart';
 import 'Provider.dart';
+import 'overseer.dart';
 
 class ContactListBuilder extends StatelessWidget {
   final Function builder;
+  final Stream stream;
 
-  const ContactListBuilder({required this.builder});
+  const ContactListBuilder({required this.builder, required this.stream});
 
   @override
   Widget build(BuildContext context) {
     // Access data available through provider class
-    ContactManager manager = Provider.of<ContactManager>(context);
+    ContactManager manager = Provider.of(context).fetch(ContactManager);
 
     return StreamBuilder<dynamic>(
-      stream: manager.contactListView,
+      stream: stream,
       // Snapshot is the data being yielded by stream
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
 
