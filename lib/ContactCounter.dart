@@ -11,7 +11,7 @@ class ContactCounter extends StatelessWidget {
 
     return Chip(
       label: StreamBuilder<int>(
-          stream: manager.contactCount,
+          stream: manager.count$,
           builder: (context, snapshot) {
             return Text((snapshot.data ?? 0).toString(),
               style: TextStyle(
