@@ -5,21 +5,34 @@ import 'package:flutter_email_client_app/service/ContactService.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ContactManager {
+  // PublishSubject is a stream with extra methods
+  final PublishSubject<String> _filterSubject = PublishSubject<String>();
   // This stream can subscribe and listen to contactListView stream
-  final BehaviorSubject<int> _contactCount = BehaviorSubject<int>();
+  final BehaviorSubject<int> _countSubject = BehaviorSubject<int>();
+  final PublishSubject<List<Contact>> _collectionSubject = PublishSubject<List<Contact>>();
 
-  Stream<int> get count$ => _contactCount.stream; // returning the data passed through the stream
-  // return a stream from a method that returns a Future
-  Stream<List<Contact>> browse$({String? query}) =>
-      Stream.fromFuture(ContactService.browse(query: query));
+  // Sink is hole in application UI which takes in data like filter query being searched
+  Sink<String> get inFilter => _filterSubject.sink;
+
+  // Exposed values through streams
+  Stream<int> get count$ => _countSubject.stream; // returning the data passed through the stream
+  Stream<List<Contact>> get browse$ => _collectionSubject.stream;
 
   ContactManager() {
-    // Listen for list of strings & add a integer value to the streamController
-    browse$().listen((list) => _contactCount.add(list.length));
+    // We listen to the _filterSubject stream data and react with a search query through contact service
+    _filterSubject.stream.listen((filter) async {
+      var contacts = await ContactService.browse(filter: filter);
+
+      // push results into a collectionSubject stream
+      _collectionSubject.add(contacts);
+    });
+    // Listen for contacts list & add a integer value based on its length to the countSubject Stream
+    _collectionSubject.listen((list) => _countSubject.add(list.length));
   }
 
   void dispose() {
-    _contactCount.close();
+    _countSubject.close();
+    _filterSubject.close();
   }
 
 }

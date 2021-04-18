@@ -40,8 +40,11 @@ class ContactSearchDelegate extends SearchDelegate {
       );
     }
 
+    // Use Delegate class query getter to add data to inFilter stream sink
+    manager.inFilter.add(query);
+
     return ContactListBuilder(
-        stream: manager.browse$(query: query),
+        stream: manager.browse$,
         builder: (context, contacts) {
           return ListView.separated(
             itemCount: contacts.length,

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class ContactService {
   static String _url = "https://jsonplaceholder.typicode.com/users";
-  static Future<List<Contact>> browse({query}) async {
+  static Future<List<Contact>> browse({filter}) async {
 
     http.Response response = await http.get(Uri.parse(_url));
 
@@ -20,9 +20,9 @@ class ContactService {
 
     // since query is an optional parameter
     // query is null when no value is passed & empty when an empty string is passed in search
-    if (query != null && query.isNotEmpty) {
+    if (filter != null && filter.isNotEmpty) {
       _contacts = _contacts.where(
-              (contact) => contact.name.toLowerCase().contains(query)
+              (contact) => contact.name.toLowerCase().contains(filter)
       );
     }
 
