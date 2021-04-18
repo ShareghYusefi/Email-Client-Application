@@ -3,7 +3,6 @@ import 'package:flutter_email_client_app/AppDrawer.dart';
 import 'package:flutter_email_client_app/ContactManager.dart';
 import 'package:flutter_email_client_app/ContactSearchDelegate.dart';
 import 'package:flutter_email_client_app/model/Contact.dart';
-import 'package:flutter_email_client_app/overseer.dart';
 
 import 'ContactCounter.dart';
 import 'ContactListBuilder.dart';
