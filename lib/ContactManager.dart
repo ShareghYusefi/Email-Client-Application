@@ -20,9 +20,12 @@ class ContactManager {
 
   ContactManager() {
     // We listen to the _filterSubject stream data and react with a search query through contact service
-    _filterSubject.debounceTime(Duration(milliseconds: 500)).listen((filter) async {
-      var contacts = await ContactService.browse(filter: filter);
-
+    _filterSubject.debounceTime(Duration(milliseconds: 500))
+        // The switchMap maps the search queries and begin executing requests to server and disregards all requests but the last one
+        .switchMap((filter) async* {
+          yield await ContactService.browse(filter: filter);
+        })
+        .listen((contacts) async {
       // push results into a collectionSubject stream
       _collectionSubject.add(contacts);
     });
