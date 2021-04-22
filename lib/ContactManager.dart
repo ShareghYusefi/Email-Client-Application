@@ -5,9 +5,9 @@ import 'package:flutter_email_client_app/service/ContactService.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ContactManager {
-  // PublishSubject is a stream with extra methods
+  // PublishSubject is a streamController which can be subscribed to many times over instead of once
   final PublishSubject<String> _filterSubject = PublishSubject<String>();
-  // This stream can subscribe and listen to contactListView stream
+  // BehaviorSubject is a streamController which has memory of the last seen value which removes waiting state in an application
   final BehaviorSubject<int> _countSubject = BehaviorSubject<int>();
   final PublishSubject<List<Contact>> _collectionSubject = PublishSubject<List<Contact>>();
 
@@ -20,7 +20,7 @@ class ContactManager {
 
   ContactManager() {
     // We listen to the _filterSubject stream data and react with a search query through contact service
-    _filterSubject.stream.listen((filter) async {
+    _filterSubject.debounceTime(Duration(milliseconds: 500)).listen((filter) async {
       var contacts = await ContactService.browse(filter: filter);
 
       // push results into a collectionSubject stream

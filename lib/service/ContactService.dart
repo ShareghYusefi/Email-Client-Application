@@ -5,12 +5,13 @@ import 'package:http/http.dart' as http;
 
 
 class ContactService {
-  static String _url = "https://jsonplaceholder.typicode.com/users";
+
+  static String _url = "http://fip.zaiste.net/contacts";
   static Future<List<Contact>> browse({filter}) async {
 
-    http.Response response = await http.get(Uri.parse(_url));
+    http.Response response = await http.get(Uri.parse("$_url?q=$filter"));
 
-    await Future.delayed(Duration(seconds: 1));
+    // await Future.delayed(Duration(seconds: 1));
 
     String content = response.body;
     // Take json string data and turn into a collection of Map data set
@@ -20,11 +21,11 @@ class ContactService {
 
     // since query is an optional parameter
     // query is null when no value is passed & empty when an empty string is passed in search
-    if (filter != null && filter.isNotEmpty) {
-      _contacts = _contacts.where(
-              (contact) => contact.name.toLowerCase().contains(filter)
-      );
-    }
+    // if (filter != null && filter.isNotEmpty) {
+    //   _contacts = _contacts.where(
+    //           (contact) => contact.name.toLowerCase().contains(filter)
+    //   );
+    // }
 
     return _contacts.toList();
   }

@@ -31,14 +31,14 @@ class ContactSearchDelegate extends SearchDelegate {
   }
 
   @override
-  Widget buildResults(BuildContext context) {
+  Widget buildSuggestions(BuildContext context) {
     ContactManager manager = Provider.of(context).fetch(ContactManager);
 
-    if (query.length < 3) {
-      return Center(
-        child: Text("Type at least 3 letters to search"),
-      );
-    }
+    // if (query.length < 3) {
+    //   return Center(
+    //     child: Text("Type at least 3 letters to search"),
+    //   );
+    // }
 
     // Use Delegate class query getter to add data to inFilter stream sink
     manager.inFilter.add(query);
@@ -63,7 +63,7 @@ class ContactSearchDelegate extends SearchDelegate {
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
+  Widget buildResults(BuildContext context) {
     return Container();
   }
   

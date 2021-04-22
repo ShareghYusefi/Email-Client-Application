@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_email_client_app">
-   <application
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- This Line -->
+
+    <application
         android:label="flutter_email_client_app"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
-        <activity
+       <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
