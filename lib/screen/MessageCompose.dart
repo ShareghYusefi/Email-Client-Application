@@ -51,11 +51,12 @@ class _MessageComposeState extends State<MessageCompose> {
                     },
                     onError: (context, error) {
                       return TextField(
+                        onChanged: manager.inEmail.add,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.add),
                             labelText: 'TO (error)',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                            errorText: 'This field is invalid',
+                            errorText: error,
                         ),
                       );
                     },
