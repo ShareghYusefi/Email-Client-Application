@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/Message.dart';
-import 'package:flutter_email_client_app/MessageCompose.dart';
+import 'package:flutter_email_client_app/screen/MessageCompose.dart';
 
 class ComposeButton extends StatelessWidget {
-  List<Message> messages;
+  final List<Message> messages;
   ComposeButton(this.messages);
 
   @override
@@ -12,7 +12,7 @@ class ComposeButton extends StatelessWidget {
       child: Icon(Icons.add),
       onPressed: () async {
         // Navigator returns a future
-        Message message = await Navigator.push(
+        Message? message = await Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => MessageCompose())

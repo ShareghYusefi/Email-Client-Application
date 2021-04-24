@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/App.dart';
-import 'package:flutter_email_client_app/ContactManager.dart';
 import 'package:flutter_email_client_app/Provider.dart';
 import 'package:flutter_email_client_app/overseer.dart';
 

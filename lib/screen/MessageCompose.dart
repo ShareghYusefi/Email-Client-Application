@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/Message.dart';
+import 'package:flutter_email_client_app/Observer.dart';
+import 'package:flutter_email_client_app/Provider.dart';
+import 'package:flutter_email_client_app/manager/MessageFormManager.dart';
+import 'package:flutter_email_client_app/manager/MessageFormManager.dart';
 
 class MessageCompose extends StatefulWidget {
   @override
@@ -15,6 +19,8 @@ class _MessageComposeState extends State<MessageCompose> {
 
   @override
   Widget build(BuildContext context) {
+    MessageFormManager manager = Provider.of(context).fetch(MessageFormManager);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Compose Message'),
@@ -26,15 +32,33 @@ class _MessageComposeState extends State<MessageCompose> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                  title: TextFormField(
-                    // if value does not contain @ sign, throw error message
-                    validator: (value) => !value!.contains('@') ? "'To' Field must be a valid email" : null,
-                    onSaved: (value) => to = value!,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.add),
-                        labelText: 'TO',
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold)
-                    ),
+                  // Observer observes the value of the stream connected and renders code as a response to data
+                  title: Observer(
+                    stream: manager.email$,
+                    onSuccess: (context, data) {
+                      return TextField(
+                          // onChanged: (value){
+                          //   manager.inEmail.add(value);
+                          // },
+                        // point free programming - construct functions where don't need to specify parameters
+                        onChanged: manager.inEmail.add,
+                          decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.add),
+                          labelText: 'TO',
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold)
+                          ),
+                        );
+                    },
+                    onError: (context, error) {
+                      return TextField(
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.add),
+                            labelText: 'TO (error)',
+                            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                            errorText: 'This field is invalid',
+                        ),
+                      );
+                    },
                   ),
                 ),
                 ListTile(

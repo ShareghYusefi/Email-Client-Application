@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'CounterManager.dart';
+import 'manager/CounterManager.dart';
 import 'Provider.dart';
 
 class FabButton extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/overseer.dart';
-import 'ContactManager.dart';
 
 class Provider extends InheritedWidget {
 

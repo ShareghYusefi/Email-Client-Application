@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_client_app/ContactListBuilder.dart';
-
-import 'ContactManager.dart';
-import 'Provider.dart';
-import 'model/Contact.dart';
-import 'overseer.dart';
+import 'package:flutter_email_client_app/Provider.dart';
+import 'package:flutter_email_client_app/manager/ContactManager.dart';
+import 'package:flutter_email_client_app/model/Contact.dart';
 
 class ContactSearchDelegate extends SearchDelegate {
 

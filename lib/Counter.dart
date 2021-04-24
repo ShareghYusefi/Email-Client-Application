@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_email_client_app/CounterManager.dart';
 import 'package:flutter_email_client_app/Observer.dart';
 import 'package:flutter_email_client_app/Provider.dart';
+import 'package:flutter_email_client_app/manager/CounterManager.dart';
 
 class Counter extends StatelessWidget {
   @override

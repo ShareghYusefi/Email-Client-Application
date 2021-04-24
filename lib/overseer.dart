@@ -1,7 +1,10 @@
 // A class that manages managers like a dispatcher
 import 'package:flutter/material.dart';
-import 'package:flutter_email_client_app/ContactManager.dart';
-import 'package:flutter_email_client_app/CounterManager.dart';
+import 'package:flutter_email_client_app/manager/MessageFormManager.dart';
+import 'package:flutter_email_client_app/manager/MessageFormManager.dart';
+
+import 'manager/ContactManager.dart';
+import 'manager/CounterManager.dart';
 
 class Overseer {
   // A list of manager that can be accessed by overseer
@@ -10,6 +13,7 @@ class Overseer {
   Overseer() {
     register(ContactManager, ContactManager());
     register(CounterManager, CounterManager());
+    register(MessageFormManager, MessageFormManager());
   }
 
   // A way to hire managers for the garden
