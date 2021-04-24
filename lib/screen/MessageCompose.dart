@@ -54,7 +54,7 @@ class _MessageComposeState extends State<MessageCompose> {
                         onChanged: manager.inEmail.add,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.add),
-                            labelText: 'TO (error)',
+                            labelText: 'TO',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             errorText: error,
                         ),
