@@ -13,8 +13,16 @@ mixin Validation {
         if( isEmail(value)){
           sink.add(value);
         } else {
-          sink.addError('Our message error');
+          sink.addError("Our message error");
         }
+      });
+
+  final validateSubject = StreamTransformer<String, String>.fromHandlers(
+    // handle data receive a value and pass to the provided sink
+      handleData: (value, sink){
+       value.length == 0
+           ? sink.addError("'Subject' Field is required")
+           : sink.add(value);
       });
 
 }
