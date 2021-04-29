@@ -7,15 +7,15 @@ class MessageFormManager with Validation {
   final _email = BehaviorSubject<String>();
   // Transform _email stream to deliver the value if it meets our validation criteria or an error
   Stream<String> get email$ => _email.stream.transform(validateEmail);
-  Sink<String> get inEmail => _email.sink;
+  void setEmail(String value) => _email.sink.add(value);
 
   final _subject = BehaviorSubject<String>();
   Stream<String> get subject$ => _subject.stream.transform(validateSubject);
-  Sink<String> get inSubject => _subject.sink;
+  void setSubject(String value) => _subject.sink.add(value);
 
   final _body = BehaviorSubject<String>();
   Stream<String> get body$ => _body.stream;
-  Sink<String> get inBody => _body.sink;
+  void setBody(String value) => _body.sink.add(value);
 
   // If all three streams provide values instead of errors the form is valid
   // combineLatest only watches value, not errors
