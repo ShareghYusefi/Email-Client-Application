@@ -18,7 +18,7 @@ class Message {
 
     String url = status == 'important'
         ? 'https://run.mocky.io/v3/171a367e-af83-41e9-816f-7ffe2b955c99'
-        : 'https://run.mocky.io/v3/37398798-2df2-4838-9b19-d7d7d2fb0d28';
+        : 'https://run.mocky.io/v3/9c130d0a-d0b5-4021-9967-d0d0b84999e3';
 
     http.Response response =
           await http.get(Uri.parse(url));
