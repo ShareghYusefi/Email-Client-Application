@@ -12,7 +12,7 @@ class Provider extends InheritedWidget {
   // of method for convenience to return ContactManager class directly
   static Overseer of(BuildContext context){
     // Get the closest instance of provider and cast as provider and return its data
-    return  (context.dependOnInheritedWidgetOfExactType<Provider>() as Provider).data;
+    return  (context.dependOnInheritedWidgetOfExactType<Provider>())!.data;
   }
 
   // We will be using InheritedWidget in a immutable sense where it will not change

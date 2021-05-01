@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:flutter_email_client_app/model/Contact.dart';
 import 'package:flutter_email_client_app/service/ContactService.dart';
 import 'package:rxdart/rxdart.dart';
+import '../Manager.dart';
 
-class ContactManager {
+class ContactManager implements Manager{
   // PublishSubject is a streamController which can be subscribed to many times over instead of once
   final PublishSubject<String> _filterSubject = PublishSubject<String>();
   // BehaviorSubject is a streamController which has memory of the last seen value which removes waiting state in an application

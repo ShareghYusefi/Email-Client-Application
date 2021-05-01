@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'package:flutter_email_client_app/Manager.dart';
 import 'package:flutter_email_client_app/Message.dart';
 import 'package:flutter_email_client_app/Validation.dart';
 import 'package:rxdart/rxdart.dart';
 
-class MessageFormManager with Validation {
+class MessageFormManager with Validation implements Manager{
   final _email = BehaviorSubject<String>();
   // Transform _email stream to deliver the value if it meets our validation criteria or an error
   Stream<String> get email$ => _email.stream.transform(validateEmail);
@@ -31,5 +32,10 @@ class MessageFormManager with Validation {
     String body  = _body.value!;
 
     return Message(subject, body);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
   }
 }
